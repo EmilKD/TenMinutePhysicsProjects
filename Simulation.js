@@ -18,6 +18,7 @@ function cY(pos){
 
 var dt = 1/10;
 var g = -9.83;
+var e = 0.8;
 
 var ball = {
     radius: 0.2,
@@ -34,7 +35,7 @@ function draw(){
     c.fillStyle = "#FF0000";
 
     c.beginPath();
-    c.arc(cX(ball.pos), cY(ball.pos), cScale * ball.radius, 0.0, 2.0 * Math.PI)
+    c.arc(cX(ball.pos), cY(ball.pos), cScale * ball.radius, 0.0, 10.0 * Math.PI)
     c.fill();
 }
 
@@ -48,17 +49,17 @@ function simulate(){
 
         if (ball.pos.x < 0.0){
         ball.pos.x = -ball.pos.x;
-        ball.vel.x = -ball.vel.x;
+        ball.vel.x = -e*ball.vel.x;
         } else if (ball.pos.x > simWidth){
             ball.pos.x = 2*simWidth - ball.pos.x;
-            ball.vel.x = -ball.vel.x;
+            ball.vel.x = -e*ball.vel.x;
         }
         if (ball.pos.y < 0){
             ball.pos.y = -ball.pos.y;
-            ball.vel.y = -ball.vel.y; 
+            ball.vel.y = -e*ball.vel.y; 
         } else if (ball.pos.y > simHeight){
             ball.pos.y = 2*simHeight - ball.pos.y;
-            ball.vel.y = - ball.vel.y; 
+            ball.vel.y = - e*ball.vel.y; 
         }
     }  
 }
