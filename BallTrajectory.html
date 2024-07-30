@@ -28,7 +28,7 @@
                     return canvas.height - pos.y * cScale;
                 }
 
-                var dt = 1/60;
+                var dt = 1/10;
                 var g = -9.83;
 
                 var ball = {
@@ -37,7 +37,8 @@
                     vel: {x:10, y:15}
                 }
 
-                
+                var substeps = 32;
+                var ndt = dt/substeps;
 
                 // drawing --------------
                 function draw(){
@@ -51,24 +52,27 @@
 
                 // Simulate --------------
                 function simulate(){
-                    ball.vel.y += g*dt;
-                    ball.pos.x += ball.vel.x*dt;
-                    ball.pos.y += ball.vel.y*dt
+                    for (var i=0; i<substeps; i++)
+                    {
+                        ball.vel.y += g*ndt;
+                        ball.pos.x += ball.vel.x*ndt;
+                        ball.pos.y += ball.vel.y*ndt;
 
-                    if (ball.pos.x < 0.0){
+                        if (ball.pos.x < 0.0){
                         ball.pos.x = -ball.pos.x;
                         ball.vel.x = -ball.vel.x;
-                    } else if (ball.pos.x > simWidth){
-                        ball.pos.x = 2*simWidth - ball.pos.x;
-                        ball.vel.x = -ball.vel.x;
-                    }
-                    if (ball.pos.y < 0){
-                        ball.pos.y = -ball.pos.y;
-                        ball.vel.y = - ball.vel.y; 
-                    } else if (ball.pos.y > simHeight){
-                        ball.pos.y = 2*simHeight - ball.pos.y;
-                        ball.vel.y = - ball.vel.y; 
-                    }
+                        } else if (ball.pos.x > simWidth){
+                            ball.pos.x = 2*simWidth - ball.pos.x;
+                            ball.vel.x = -ball.vel.x;
+                        }
+                        if (ball.pos.y < 0){
+                            ball.pos.y = -ball.pos.y;
+                            ball.vel.y = -ball.vel.y; 
+                        } else if (ball.pos.y > simHeight){
+                            ball.pos.y = 2*simHeight - ball.pos.y;
+                            ball.vel.y = - ball.vel.y; 
+                        }
+                    }  
                 }
 
                 // Updating --------------
