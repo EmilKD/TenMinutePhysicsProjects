@@ -8,6 +8,10 @@
     </head>
 
     <body>
+        <button class="button" onclick="WorldSetup()">Restart</button>
+        <button class="button" onclick="gravitySwitch()">Gravity</button>
+        Restitution<input type="range" min="0" max="10" value="10" id="restitutionSlider" class="slider">
+
         <canvas id="myCanvas" style="border: 2px solid">
             <script src="Simulation.js">               
             </script>
