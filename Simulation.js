@@ -45,6 +45,28 @@ class vector2d {
     dot(a){
         return this.x*a.x + this.y*a.y;
     }
+
+    perp(){
+        return new vector2d(-this.y, this.x);
+    }
+
+    dir(){
+        return new vector2d(this.scale(1/this.mag()));
+    }
+
+    clone(){
+        return new vector2d(this.x, this.y);
+    }
+}
+
+function ClosestPoint(p, a, b){
+    let ab = b.sub(a);
+    let t = ab.dot(ab);
+    if (t==0){
+        return a.clone();
+    } 
+    t = Math.max(0, Math.min(1, ab.dir().scale(ab.dot(p.sub(a)))));
+    return new vector2d(ab.add(ab.dir.scale(t)));
 }
 
 class Ball {
@@ -61,6 +83,53 @@ class Ball {
         this.pos.x += this.vel.x*dt; 
         this.pos.y += this.vel.y*dt; 
     }
+}
+
+class Obstacle {
+    constructor(rad, pos, pushVel){
+        this.rad = rad;
+        this.pos = pos;
+        this.pushVel = pushVel;
+    }
+}
+
+class Flipper {
+    constructor(pos, length, angularVel, dir, startAngle, maxAngle){
+        this.pos = pos;
+        this.length = length;
+        this.angularVel = angularVel;
+        this.dir = dir
+        this.startAngle = startAngle;
+        this.maxAngle = maxAngle;
+        this.currentAngle = this.startAngle;
+        this.activation = 0;
+    }
+
+    simulate(dt){
+        if (this.activation){
+            if (dir == 1){
+                if (this.currentAngle > this.maxAngle){
+                    this.currentAngle -= this.angularVel * dt;
+                }
+            } else if (dir == -1){
+                if (this.currentAngle < this.maxAngle){
+                    this.currentAngle += this.angularVel * dt;
+                }
+            }
+        }
+        else{
+            if (dir == 1){
+                if (this.currentAngle < this.startAngle){
+                    this.currentAngle += this.angularVel * dt;
+                }
+            } else if (dir == -1){
+                if (this.currentAngle > this.startAngle){
+                    this.currentAngle -= this.angularVel * dt;
+                }
+            }
+        }
+    }
+
 }
 
 var PhysicsWorld = {
