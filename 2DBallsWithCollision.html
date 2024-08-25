@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+
+
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+            <title>Pinball Machine</title>
+            <style>
+                body{
+                    font-family: Verdana;
+                    font-size: 15px;
+                }
+                .button{
+                    background-color: darkgray;
+                    border: none;
+                    color: white;
+                    padding: 10px 32px;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                }
+            </style>
+    </head>
+
+    <body>
+        <button class="button" onclick="WorldSetup()">Restart</button>
+        <button class="button" onclick="gravitySwitch()">Gravity</button>
+        Restitution<input type="range" min="0" max="10" value="10" id="restitutionSlider" class="slider">
+
+        <canvas id="myCanvas" style="border: 2px solid">
+            <script src="2DBallsWithCollision.js">               
+            </script>
+        </canvas>
+    </body>
